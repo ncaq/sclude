@@ -66,6 +66,9 @@ describe("Array", () => {
   test("intersperse", () =>
     expect([0, 1, 2].intersperse(0.5)).toEqual([0, 0.5, 1, 0.5, 2]));
 
+  test("scan", () =>
+    expect([1, 2, 3].scan((a, b) => a + b, 0)).toEqual([0, 1, 3, 6]));
+
   test("takeWhile", () => {
     expect([1, 2, 3, 4, 1, 2, 3, 4].takeWhile(e => e < 3)).toEqual([1, 2]);
     expect([1, 2, 3].takeWhile(e => e < 9)).toEqual([1, 2, 3]);
