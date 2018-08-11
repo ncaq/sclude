@@ -17,7 +17,11 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testMatch": [
-      "**/__tests__/*.+(ts|tsx|js)"
+      "**/__tests__/(?!flycheck)*.+(ts|tsx|js)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
     ]
   },
   "devDependencies": {
