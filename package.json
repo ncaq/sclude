@@ -1,7 +1,7 @@
 {
   "name": "sclude",
   "version": "0.0.0",
-  "description": "import function from Haskell Prelude to TypeScript and JavaScript standard build-in objects methods",
+  "description": "Sclude is a package intended mainly to bring functions in Prelude of Haskell into TypeScript or JavaScript as methods of standard built in objects",
   "repository": "https://github.com/ncaq/sclude.git",
   "author": "ncaq",
   "license": "MIT",
