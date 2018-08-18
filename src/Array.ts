@@ -1,16 +1,20 @@
+/* tslint:disable:member-ordering */
+
 import Optional from "typescript-optional";
 
-export function cons<T>(a: T, d: T[]): T[] {
+function cons<T>(a: T, d: T[]): T[] {
   return [a].concat(d);
 }
 
-export function snoc<T>(d: T[], a: T): T[] {
+function snoc<T>(d: T[], a: T): T[] {
   return d.concat(a);
 }
 
 declare global {
   interface Array<T> {
-    // ++ is concat
+    // basic
+    // ++はconcatとして存在する
+    // 部分関数を避けてオリジナルとは異なりOptionalを使っています
     readonly head: Optional<T>;
     readonly last: Optional<T>;
     readonly tail: T[];
@@ -25,27 +29,32 @@ declare global {
      * emptyは空の値とややこしいので避けました
      */
     readonly isEmpty: boolean;
-    // length is length
-    readonly subsequences: T[][];
-    readonly permutations: T[][];
-    readonly and: boolean;
-    readonly or: boolean;
-    // sumを型安全に定義する方法がわからない
-    // productを型安全に定義する方法がわからない
-    // maximumを型安全に定義する方法がわからない
-    // minimumを型安全に定義する方法がわからない
-    readonly group: T[][];
-    readonly inits: T[][];
-    readonly tails: T[][];
+    // lengthはlengthとして存在する
 
+    // transformations
     intersperse(inter: T): T[];
     // intercalateを型安全に定義する方法がわからない
     // transposeを型安全に定義する方法がわからない
-    // foldl is reduce
-    // foldr is reduceRight
+    readonly subsequences: T[][];
+    readonly permutations: T[][];
+
+    // reducing
+    // foldlはreduceとして存在する
+    // foldrはreduceRightとして存在する
+    // foldl1みたいなバリエーションは部分関数なのでこわいので作りたくない
+
+    // special reduce
     // concatはFoldableを型安全に表現する方法がわからない
-    // any is some
-    // all is every
+    readonly and: boolean;
+    readonly or: boolean;
+    // anyはsomeとして存在する
+    // allはeveryとして存在する
+    // sumを型安全に定義する方法がわからない
+    // productを型安全に定義する方法がわからない
+    readonly maximum: T;
+    readonly minimum: T;
+
+    // scans
     scan<U>(
       callback: ((accumulator: U, currentValue: T) => U),
       initialValue: U
@@ -54,10 +63,19 @@ declare global {
       callback: (previousValue: U, currentValue: T) => U,
       initialValue: U
     ): U[];
+    // scanl1系もこわいので作りたくない
+
+    // accumulating
     // mapAccumLはTraversableを表現する方法がわからない
+
+    // Infinite
     // iterate, repeat, cycleは無限配列が標準に含まれていない
     // replicateは自然にメソッドに出来ない
+
+    // unfolding
     // unfoldrはメソッドにできない
+
+    // extracting sublists
     take(size: number): T[];
     drop(size: number): T[];
     splitAt(point: number): [T[], T[]];
@@ -67,23 +85,34 @@ declare global {
     span(pred: (x: T) => boolean): [T[], T[]];
     break(pred: (x: T) => boolean): [T[], T[]];
     stripPrefix(prefix: T[]): Optional<T[]>;
+    readonly group: T[][];
+    readonly inits: T[][];
+    readonly tails: T[][];
+
+    // predicates
     isPrefixOf(body: T[]): boolean;
     isSuffixOf(body: T[]): boolean;
     isInfixOf(body: T[]): boolean;
     isSubsequenceOf(body: T[]): boolean;
-    // elem is includes
+
+    // searching by equality
+    // elemはincludesとして存在する
     // lookupは特殊化出来ない
-    // find is find
-    // filter is filter
+
+    // searching with a predicate
+    // findはfindとして存在する
+    // filterはfilterとして存在する
     partition(pred: (x: T) => boolean): [T[], T[]];
-    // !! is []
+
+    // indexing
+    // !!は[]として存在する
     /**
      * HaskellではelemIndex
      * JavaScriptではelem相当の機能はincludesなので名前を揃える
      */
     includesIndex(target: T): Optional<number>;
     includesIndices(target: T): number[];
-    // findIndex is findIndex
+    // findIndexはfindIndexとして存在する
     /*
      * `findLastIndex()`関数は配列内の要素が指定されたテスト関数を満たす場合
      * 配列内のインデックスを返します
@@ -96,7 +125,45 @@ declare global {
      */
     findLastIndex(pred: (x: T) => boolean): number;
     findIndices(pred: (x: T) => boolean): number[];
-    groupBy(pred: (a: T, b: T) => boolean): T[][];
+
+    // zipping
+    zip<U>(that: U[]): Array<[T, U]>;
+    zipWith<U, V>(that: U[], callback: (a: T, b: U) => V): V[];
+    // オーバーロード可能なので出来ればzip3系は関数1つで定義したい
+    // unzipを型安全に実装する方法がわからない
+
+    // strings
+    // JavaScriptはStringがCharの配列では無いのでString向けのメソッドは別になります
+
+    // set operations
+    readonly nub: T[];
+    // 元はdeleteですが予約語なので回避した命名になりました
+    deleteEqual(left: T): T[];
+    // JavaScriptに演算子オーバーロードが無いので\\はdiffになりました
+    diff(that: T[]): T[];
+    union(that: T[]): T[];
+    intersect(that: T[]): T[];
+
+    // ordered
+    // sortはsortとして存在する
+    insert(element: T): T[];
+
+    // user-supplied equality
+    nubBy(equal: (a: T, b: T) => boolean): T[];
+    deleteBy(equal: (a: T, b: T) => boolean, left: T): T[];
+    deleteFirstsBy(equal: (a: T, b: T) => boolean, that: T[]): T[];
+    unionBy(equal: (a: T, b: T) => boolean, that: T[]): T[];
+    groupBy(equal: (a: T, b: T) => boolean): T[][];
+
+    // user-supplied comparison
+    // Ordering enumを追加するか迷いましたが
+    // sortがそのままになるので一貫性を保ったほうが良いと判断して
+    // numberを比較関数に使うことにしました
+    // orderedかどうか
+    // sortByはsortがカバーしている
+    insertBy(compare: (a: T, b: T) => number, left: T): T[];
+    maximumBy(compare: (a: T, b: T) => number): T;
+    minimumBy(compare: (a: T, b: T) => number): T;
   }
 }
 
@@ -126,19 +193,13 @@ Object.defineProperty(Array.prototype, "init", {
 
 Object.defineProperty(Array.prototype, "uncons", {
   get<T>() {
-    return this.head.matches({
-      empty: () => Optional.empty(),
-      present: (x: T) => Optional.ofNonNull([x, this.tail])
-    });
+    return this.head.map((x: T) => [x, this.tail]);
   }
 });
 
 Object.defineProperty(Array.prototype, "unsnoc", {
   get<T>() {
-    return this.last.matches({
-      empty: () => Optional.empty(),
-      present: (x: T) => Optional.ofNonNull([this.init, x])
-    });
+    return this.last.map((x: T) => [this.init, x]);
   }
 });
 
@@ -147,6 +208,17 @@ Object.defineProperty(Array.prototype, "isEmpty", {
     return this.length === 0;
   }
 });
+
+Array.prototype.intersperse = function<T>(inter: T) {
+  const result: T[] = [];
+  this.forEach((element, index) => {
+    result.push(element);
+    if (index !== this.length - 1) {
+      result.push(inter);
+    }
+  });
+  return result;
+};
 
 Object.defineProperty(Array.prototype, "subsequences", {
   get<T>() {
@@ -221,40 +293,33 @@ Object.defineProperty(Array.prototype, "or", {
   }
 });
 
-Object.defineProperty(Array.prototype, "group", {
+Object.defineProperty(Array.prototype, "maximum", {
   get<T>() {
-    return this.groupBy((a: T, b: T) => a === b);
-  }
-});
-
-Object.defineProperty(Array.prototype, "inits", {
-  get<T>() {
-    return this.unsnoc.matches({
-      empty: () => [[]],
-      present: ([xs, _]: [T[], T]) => snoc(xs.inits, [this])
+    return this.maximumBy((a: T, b: T) => {
+      if (a < b) {
+        return -1;
+      } else if (a === b) {
+        return 0;
+      } else {
+        return 1;
+      }
     });
   }
 });
 
-Object.defineProperty(Array.prototype, "tails", {
+Object.defineProperty(Array.prototype, "minimum", {
   get<T>() {
-    return this.unsnoc.matches({
-      empty: () => [[]],
-      present: ([xs, _]: [T[], T]) => cons(this, xs.tails)
+    return this.minimumBy((a: T, b: T) => {
+      if (a < b) {
+        return -1;
+      } else if (a === b) {
+        return 0;
+      } else {
+        return 1;
+      }
     });
   }
 });
-
-Array.prototype.intersperse = function<T>(inter: T) {
-  const result: T[] = [];
-  this.forEach((element, index) => {
-    result.push(element);
-    if (index !== this.length - 1) {
-      result.push(inter);
-    }
-  });
-  return result;
-};
 
 Array.prototype.scan = function(callback, initialValue) {
   return this.uncons.matches({
@@ -326,12 +391,35 @@ Array.prototype.stripPrefix = function(prefix) {
   return prefix.uncons.matches({
     empty: () => Optional.ofNonNull([...this]),
     present: ([x, xs]) =>
-      this.uncons.matches({
-        empty: () => Optional.empty<any[]>(),
-        present: ([y, ys]) => (x === y ? ys.stripPrefix(xs) : Optional.empty())
-      })
+      this.uncons.flatMap(
+        ([y, ys]) => (x === y ? ys.stripPrefix(xs) : Optional.empty())
+      )
   });
 };
+
+Object.defineProperty(Array.prototype, "group", {
+  get<T>() {
+    return this.groupBy((a: T, b: T) => a === b);
+  }
+});
+
+Object.defineProperty(Array.prototype, "inits", {
+  get<T>() {
+    return this.unsnoc.matches({
+      empty: () => [[]],
+      present: ([xs, _]: [T[], T]) => snoc(xs.inits, [this])
+    });
+  }
+});
+
+Object.defineProperty(Array.prototype, "tails", {
+  get<T>() {
+    return this.unsnoc.matches({
+      empty: () => [[]],
+      present: ([xs, _]: [T[], T]) => cons(this, xs.tails)
+    });
+  }
+});
 
 Array.prototype.isPrefixOf = function(body) {
   return this.uncons.matches({
@@ -414,12 +502,125 @@ Array.prototype.findIndices = function(pred) {
   return indices;
 };
 
-Array.prototype.groupBy = function(pred) {
+Array.prototype.zip = function<T, U>(that: U[]) {
+  const result: Array<[T, U]> = this.zipWith(that, (a: T, b: U) => {
+    const forAsType: [T, U] = [a, b];
+    return forAsType;
+  });
+  return result;
+};
+
+Array.prototype.zipWith = function(that, callback) {
+  return this.uncons.matches({
+    empty: () => [],
+    present: ([x, xs]) =>
+      that.uncons.matches({
+        empty: () => [],
+        present: ([y, ys]) => cons(callback(x, y), xs.zipWith(ys, callback))
+      })
+  });
+};
+
+Object.defineProperty(Array.prototype, "nub", {
+  get() {
+    // 比較が等価で良いなら標準のSetを使って実装できる
+    return Array.from(new Set(this));
+  }
+});
+
+Array.prototype.diff = function(that) {
+  return that.reduce(
+    (accumulator, currentValue) => accumulator.deleteEqual(currentValue),
+    this
+  );
+};
+
+Array.prototype.union = function(that) {
+  return Array.from(new Set([...this, ...that]));
+};
+
+Array.prototype.intersect = function(that) {
+  const thatSet = new Set(that);
+  return this.filter(element => thatSet.has(element));
+};
+
+Array.prototype.insert = function(element) {
+  return this.insertBy((a, b) => a - b, element);
+};
+
+Array.prototype.nubBy = function(equal) {
+  // equalが===とは限らないのでSetを使う方法は使えない
+  // 流石に効率が悪すぎる
+  return this.uncons.matches({
+    empty: () => [],
+    present: ([x, xs]) => cons(x, xs.filter(y => !equal(x, y)).nubBy(equal))
+  });
+};
+
+Array.prototype.deleteEqual = function(left) {
+  return this.deleteBy((a, b) => a === b, left);
+};
+
+Array.prototype.deleteBy = function(equal, left) {
+  const index = this.findIndex(x => equal(left, x));
+  if (index === -1) {
+    return [...this];
+  } else {
+    const shallowCopy = [...this];
+    shallowCopy.splice(index, 1);
+    return shallowCopy;
+  }
+};
+
+Array.prototype.deleteFirstsBy = function(equal, that) {
+  return that.reduce(
+    (accumulator, currentValue) => accumulator.deleteBy(equal, currentValue),
+    this
+  );
+};
+
+Array.prototype.unionBy = function(equal, that) {
+  return this.concat(
+    this.reduce(
+      (accumulator, currentValue) => accumulator.deleteBy(equal, currentValue),
+      that.nubBy(equal)
+    )
+  );
+};
+
+Array.prototype.groupBy = function(equal) {
   return this.uncons.matches({
     empty: () => [],
     present: ([x, xs]) => {
-      const [ys, zs] = xs.span(e => pred(e, x));
-      return cons(cons(x, ys), zs.groupBy(pred));
+      const [ys, zs] = xs.span(e => equal(e, x));
+      return cons(cons(x, ys), zs.groupBy(equal));
     }
   });
+};
+
+Array.prototype.insertBy = function(compare, left) {
+  const index = this.findIndex(element => compare(left, element) < 0);
+  const shallowCopy = [...this];
+  shallowCopy.splice(index, 0, left);
+  return shallowCopy;
+};
+
+Array.prototype.maximumBy = function(compare) {
+  return this.uncons.map(([x, xs]) =>
+    xs.reduce(
+      (accumulator, currentValue) =>
+        compare(accumulator, currentValue) < 0 ? currentValue : accumulator,
+      x
+    )
+  );
+};
+
+Array.prototype.minimumBy = function(compare) {
+  return this.uncons.map(([x, xs]) =>
+    xs.reduce(
+      (accumulator, currentValue) =>
+        0 < compare(accumulator, currentValue) ? currentValue : accumulator,
+      x
+    )
+  );
 };
