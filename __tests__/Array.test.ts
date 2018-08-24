@@ -5,12 +5,12 @@ import "../src/Array";
 describe("Array", () => {
   test("head", () => {
     expect([].head).toEqual(Optional.empty());
-    expect([1, 2, 3].head).toEqual(Optional.ofNonNull(1));
+    expect([1, 2, 3].head).toEqual(Optional.of(1));
   });
 
   test("last", () => {
     expect([].last).toEqual(Optional.empty());
-    expect([1, 2, 3].last).toEqual(Optional.ofNonNull(3));
+    expect([1, 2, 3].last).toEqual(Optional.of(3));
   });
 
   test("tail", () => {
@@ -25,7 +25,7 @@ describe("Array", () => {
 
   test("uncons", () => {
     expect([].uncons).toEqual(Optional.empty());
-    expect([1, 2, 3].uncons).toEqual(Optional.ofNonNull([1, [2, 3]]));
+    expect([1, 2, 3].uncons).toEqual(Optional.of([1, [2, 3]]));
   });
 
   test("isEmpty", () => {
@@ -65,11 +65,11 @@ describe("Array", () => {
   });
 
   test("maximum", () => {
-    expect([2, 3, 4, 1].maximum).toEqual(Optional.ofNonNull(4));
+    expect([2, 3, 4, 1].maximum).toEqual(Optional.of(4));
   });
 
   test("minimum", () => {
-    expect([2, 3, 4, 1].minimum).toEqual(Optional.ofNonNull(1));
+    expect([2, 3, 4, 1].minimum).toEqual(Optional.of(1));
   });
 
   test("scan", () =>
@@ -150,12 +150,12 @@ describe("Array", () => {
       Array.from("foobar")
         .stripPrefix(Array.from("foo"))
         .map(t => t.join(""))
-    ).toEqual(Optional.ofNonNull("bar"));
+    ).toEqual(Optional.of("bar"));
     expect(
       Array.from("foo")
         .stripPrefix(Array.from("foo"))
         .map(t => t.join(""))
-    ).toEqual(Optional.ofNonNull(""));
+    ).toEqual(Optional.of(""));
     expect(
       Array.from("barfoo")
         .stripPrefix(Array.from("foo"))
@@ -251,7 +251,7 @@ describe("Array", () => {
   });
 
   test("includesIndex", () => {
-    expect([0, 1, 2, 3, 4].includesIndex(4)).toEqual(Optional.ofNonNull(4));
+    expect([0, 1, 2, 3, 4].includesIndex(4)).toEqual(Optional.of(4));
   });
 
   test("includesIndices", () => {

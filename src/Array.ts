@@ -12,6 +12,8 @@ function snoc<T>(d: T[], a: T): T[] {
 
 declare global {
   interface Array<T> {
+    // original
+    readonly dup: T[];
     // basic
     // ++はconcatとして存在する
     // 部分関数を避けてオリジナルとは異なりOptionalを使っています
@@ -166,6 +168,12 @@ declare global {
     minimumBy(compare: (a: T, b: T) => number): T;
   }
 }
+
+Object.defineProperty(Array.prototype, "dup", {
+  get() {
+    return [...this];
+  }
+});
 
 Object.defineProperty(Array.prototype, "head", {
   get() {
@@ -389,7 +397,7 @@ Array.prototype.break = function(pred) {
 
 Array.prototype.stripPrefix = function(prefix) {
   return prefix.uncons.matches({
-    empty: () => Optional.ofNonNull([...this]),
+    empty: () => Optional.of([...this]),
     present: ([x, xs]) =>
       this.uncons.flatMap(
         ([y, ys]) => (x === y ? ys.stripPrefix(xs) : Optional.empty())
@@ -475,7 +483,7 @@ Array.prototype.includesIndex = function(target) {
   if (index === -1) {
     return Optional.empty();
   } else {
-    return Optional.ofNonNull(index);
+    return Optional.of(index);
   }
 };
 
