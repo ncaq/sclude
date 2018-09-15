@@ -61,4 +61,13 @@ describe("Map", () => {
       new Map([[0, 1]])
     );
   });
+
+  test("unionWith", () => {
+    expect(
+      new Map([[5, "a"], [3, "b"]]).unionWith(
+        new Map([[5, "A"], [7, "C"]]),
+        (a, b) => a + b
+      )
+    ).toEqual(new Map([[3, "b"], [5, "aA"], [7, "C"]]));
+  });
 });

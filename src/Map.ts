@@ -20,6 +20,7 @@ declare global {
 
     // union
     union(that: Map<K, V>): Map<K, V>;
+    unionWith(that: Map<K, V>, binary: (a: V, b: V) => V): Map<K, V>;
   }
 }
 
@@ -89,4 +90,16 @@ Map.prototype.alter = function(mapper, key) {
 
 Map.prototype.union = function(that) {
   return new Map([...that.entries(), ...this.entries()]);
+};
+
+Map.prototype.unionWith = function(that, binary) {
+  const result = new Map(that);
+  Array.from(this.entries()).forEach(([key, value]) => {
+    if (result.has(key)) {
+      result.set(key, binary(value, result.get(key)));
+    } else {
+      result.set(key, value);
+    }
+  });
+  return result;
 };
