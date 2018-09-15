@@ -6,6 +6,7 @@ declare global {
   interface Map<K, V> {
     // original
     readonly dup: Map<K, V>;
+
     // basic
     // null to isEmpty
     readonly isEmpty: boolean;
@@ -16,6 +17,9 @@ declare global {
     adjust(mapper: (x: V) => V, key: K): Map<K, V>;
     update(mapper: (x: V) => Optional<V>, key: K): Map<K, V>;
     alter(mapper: (x: Optional<V>) => Optional<V>, key: K): Map<K, V>;
+
+    // union
+    union(that: Map<K, V>): Map<K, V>;
   }
 }
 
@@ -81,4 +85,8 @@ Map.prototype.alter = function(mapper, key) {
     empty: () => this.remove(key),
     present: value => this.insert(key, value)
   });
+};
+
+Map.prototype.union = function(that) {
+  return new Map([...that.entries(), ...this.entries()]);
 };

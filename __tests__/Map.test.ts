@@ -52,4 +52,13 @@ describe("Map", () => {
       new Map([[1, 6], [2, 4]])
     );
   });
+
+  test("union", () => {
+    expect(new Map([[0, 1]]).union(new Map([[2, 3]]))).toEqual(
+      new Map([[0, 1], [2, 3]])
+    );
+    expect(new Map([[0, 1]]).union(new Map([[0, 3]]))).toEqual(
+      new Map([[0, 1]])
+    );
+  });
 });
