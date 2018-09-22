@@ -70,4 +70,13 @@ describe("Map", () => {
       )
     ).toEqual(new Map([[3, "b"], [5, "aA"], [7, "C"]]));
   });
+
+  test("unionWithKey", () => {
+    expect(
+      new Map([[1, 2]]).unionWithKey(
+        new Map([[1, 2], [3, 4]]),
+        (k, a, b) => k + a + b
+      )
+    ).toEqual(new Map([[1, 5], [3, 4]]));
+  });
 });
