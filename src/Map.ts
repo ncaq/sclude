@@ -126,8 +126,7 @@ Map.prototype.unionWithKey = function(that, merge) {
 Map.prototype.difference = function(that) {
   const result = new Map();
   Array.from(this.entries()).forEach(([key, value]) => {
-    if (that.has(key)) {
-    } else {
+    if (!that.has(key)) {
       result.set(key, value);
     }
   });
