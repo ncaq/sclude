@@ -79,4 +79,44 @@ describe("Map", () => {
       )
     ).toEqual(new Map([[1, 5], [3, 4]]));
   });
+
+  test("difference", () => {
+    expect(
+      new Map([[1, 10], [10, 10]]).difference(new Map([[1, 7], [7, 9]]))
+    ).toEqual(new Map([[10, 10]]));
+    expect(
+      new Map([[4, 1]]).difference(new Map([[1, 7], [5, 2], [9, 6]]))
+    ).toEqual(new Map([[4, 1]]));
+    expect(
+      new Map([[10, 2]]).difference(new Map([[3, 4], [6, 9], [9, 3]]))
+    ).toEqual(new Map([[10, 2]]));
+    expect(
+      new Map([[10, 8]]).difference(new Map([[1, 2], [4, 2], [6, 1], [9, 10]]))
+    ).toEqual(new Map([[10, 8]]));
+    expect(
+      new Map([[2, 1], [6, 7], [9, 10]]).difference(new Map([[2, 1], [5, 2]]))
+    ).toEqual(new Map([[6, 7], [9, 10]]));
+    expect(
+      new Map([[2, 5]]).difference(new Map([[0, 0], [1, 10], [9, 9]]))
+    ).toEqual(new Map([[2, 5]]));
+    expect(
+      new Map([[5, 7], [7, 3]]).difference(new Map([[4, 2], [6, 10]]))
+    ).toEqual(new Map([[5, 7], [7, 3]]));
+    expect(
+      new Map([[3, 5], [4, 10], [5, 5], [8, 7]]).difference(
+        new Map([[0, 8], [3, 8], [5, 9], [10, 7]])
+      )
+    ).toEqual(new Map([[4, 10], [8, 7]]));
+    expect(
+      new Map([[4, 0], [5, 1], [9, 4], [10, 0]]).difference(
+        new Map([[0, 4], [2, 1], [8, 9]])
+      )
+    ).toEqual(new Map([[4, 0], [5, 1], [9, 4], [10, 0]]));
+    expect(
+      new Map([[6, 9]]).difference(new Map([[0, 6], [1, 6], [8, 5], [10, 9]]))
+    ).toEqual(new Map([[6, 9]]));
+    expect(
+      new Map([[1, 0], [4, 10]]).difference(new Map([[5, 4], [10, 6]]))
+    ).toEqual(new Map([[1, 0], [4, 10]]));
+  });
 });

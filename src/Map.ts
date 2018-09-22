@@ -22,6 +22,12 @@ declare global {
     union(that: Map<K, V>): Map<K, V>;
     unionWith(that: Map<K, V>, binary: (a: V, b: V) => V): Map<K, V>;
     unionWithKey(that: Map<K, V>, merge: (k: K, a: V, b: V) => V): Map<K, V>;
+    // unionsは自然にメソッドに出来ない
+
+    // map系は既に存在する
+
+    // Difference and intersection
+    difference(that: Map<K, V>): Map<K, V>;
   }
 }
 
@@ -110,6 +116,17 @@ Map.prototype.unionWithKey = function(that, merge) {
   Array.from(this.entries()).forEach(([key, value]) => {
     if (result.has(key)) {
       result.set(key, merge(key, value, result.get(key)));
+    } else {
+      result.set(key, value);
+    }
+  });
+  return result;
+};
+
+Map.prototype.difference = function(that) {
+  const result = new Map();
+  Array.from(this.entries()).forEach(([key, value]) => {
+    if (that.has(key)) {
     } else {
       result.set(key, value);
     }
