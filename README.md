@@ -73,7 +73,7 @@ JavaScript lacks basic algorithm functions such as `takeWhile`, which is very tr
 標準ライブラリがメソッド記法を使っているなら,
 統一してメソッド記法を使いたい.
 
-[Lodash] (https://lodash.com/) is a good library,
+[Lodash](https://lodash.com/) is a good library,
 but if the standard library uses method notation,
 I would like to use method notation consistently.
 
