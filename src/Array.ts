@@ -1,6 +1,6 @@
 /* tslint:disable:member-ordering */
 
-import Optional from "typescript-optional";
+import { Optional } from "typescript-optional";
 
 function cons<T>(a: T, d: T[]): T[] {
   return [a].concat(d);

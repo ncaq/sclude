@@ -1,6 +1,6 @@
 /* tslint:disable:member-ordering */
 
-import Optional from "typescript-optional";
+import { Optional } from "typescript-optional";
 
 declare global {
   interface Map<K, V> {

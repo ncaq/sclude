@@ -1,4 +1,4 @@
-import Optional from "typescript-optional";
+import { Optional } from "typescript-optional";
 
 import "../src/Map";
 
