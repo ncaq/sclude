@@ -58,7 +58,7 @@ declare global {
 
     // scans
     scan<U>(
-      callback: ((accumulator: U, currentValue: T) => U),
+      callback: (accumulator: U, currentValue: T) => U,
       initialValue: U
     ): U[];
     scanRight<U>(
@@ -399,8 +399,8 @@ Array.prototype.stripPrefix = function(prefix) {
   return prefix.uncons.matches({
     empty: () => Optional.of([...this]),
     present: ([x, xs]) =>
-      this.uncons.flatMap(
-        ([y, ys]) => (x === y ? ys.stripPrefix(xs) : Optional.empty())
+      this.uncons.flatMap(([y, ys]) =>
+        x === y ? ys.stripPrefix(xs) : Optional.empty()
       )
   });
 };
