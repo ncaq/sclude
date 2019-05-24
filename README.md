@@ -80,8 +80,8 @@ I would like to use method notation consistently.
 # Bad thing is to extend the prototype
 
 prototypeを拡張する以外に良い方法があれば私もそうしていました.
-しかし,今のJavaScriptにはモジュールがありますし,
-TypeScriptを使えば被さりはチェック出来るので昔よりは行って良いのでは無いでしょうか.
+しかし今のJavaScriptにはモジュールがありますし,
+TypeScriptを使えば被さりはチェック出来るので昔よりは行って良いと判断しました.
 これは[Mikutter](https://mikutter.hachune.net/)なら普通のことです.
 
 If there was a good way to extend prototype, I did as well.
@@ -91,7 +91,7 @@ This is normal for [Mikutter](https://mikutter.hachune.net/).
 
 # There is no method that
 
-TypeScriptで型安全にメソッド記法で実装する方法がわからないものは実装していません.
+いくつかのメソッドはTypeScriptで型安全にメソッド記法で実装する方法がわからないものは実装していません.
 方法がわかったら実装します.
 
 I do not implement those that do not know how to type safely in TypeScript by method notation.
@@ -99,8 +99,6 @@ I implement if I know how.
 
 # There are other similar libraries though
 
-ScludeがTypeScriptでHaskellのライブラリをどこまで再現できるのか実験した,
-副産物というのは否定できません.
+ScludeがTypeScriptでHaskellのライブラリをどこまで再現できるのか実験した副産物というのは否定できません.
 
-I can not deny that Sclude is a by-product that
-I experimented with TypeScript to see how far I can reproduce Haskell 's library.
+I can not deny that Sclude is a by-product that I experimented with TypeScript to see how far I can reproduce Haskell 's library.
