@@ -12,27 +12,6 @@
     "lint": "prettier **/*.ts --list-different && tslint --project .",
     "test": "jest"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
-    },
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "testMatch": [
-      "**/__tests__/(?!flycheck)*.+(ts|tsx|js)"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ]
-  },
   "devDependencies": {
     "@types/jest": "24.0.13",
     "jest": "24.8.0",
