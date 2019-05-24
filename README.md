@@ -92,7 +92,7 @@ This is normal for [Mikutter](https://mikutter.hachune.net/).
 
 # There is no method that
 
-いくつかのメソッドはTypeScriptで型安全にメソッド記法で実装する方法がわからないものは実装していません.
+TypeScriptで型安全にメソッド記法で実装する方法がわからないメソッドは実装していません.
 方法がわかったら実装します.
 
 I do not implement those that do not know how to type safely in TypeScript by method notation.
