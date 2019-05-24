@@ -2,15 +2,38 @@
   "name": "sclude",
   "version": "0.0.0",
   "description": "Sclude is a package intended mainly to bring functions in Prelude of Haskell into TypeScript or JavaScript as methods of standard built in objects",
-  "repository": "https://github.com/ncaq/sclude.git",
-  "author": "ncaq",
+  "keywords": [
+    "array",
+    "function",
+    "haskell",
+    "map",
+    "object",
+    "prelude",
+    "standard",
+    "string",
+    "typescript"
+  ],
+  "homepage": "https://github.com/ncaq/sclude",
+  "bugs": "https://github.com/ncaq/sclude/issues",
   "license": "MIT",
+  "author": {
+    "name": "ncaq",
+    "email": "ncaq@ncaq.net",
+    "url": "https://www.ncaq.net/"
+  },
   "main": "dist/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ncaq/sclude.git"
+  },
   "scripts": {
     "build": "tsc",
     "fix": "prettier --write **/*.ts --list-different && tslint --fix --project .",
     "lint": "prettier **/*.ts --list-different && tslint --project .",
     "test": "jest"
+  },
+  "dependencies": {
+    "typescript-optional": "2.0.1"
   },
   "devDependencies": {
     "@types/jest": "24.0.13",
@@ -20,8 +43,5 @@
     "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.4.5"
-  },
-  "dependencies": {
-    "typescript-optional": "2.0.1"
   }
 }
