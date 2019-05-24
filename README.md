@@ -1,3 +1,4 @@
+[![npm](https://img.shields.io/npm/v/sclude.svg)](https://www.npmjs.com/package/sclude)
 [![Build Status](https://travis-ci.org/ncaq/sclude.svg?branch=master)](https://travis-ci.org/ncaq/sclude)
 
 # sclude
