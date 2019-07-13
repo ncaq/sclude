@@ -1,6 +1,6 @@
 {
   "name": "sclude",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Sclude is a package intended mainly to bring functions in Prelude of Haskell into TypeScript or JavaScript as methods of standard built in objects",
   "keywords": [
     "array",
